@@ -88,3 +88,88 @@ Error Code | Description
 3 | Some aspect of request is not supported.
 4 | Cannot perform request due to permanent resource limitations.
 5 | Cannot perform request due to temporary resource limitations.
+
+## Usage example: getting help
+Help on modes of operation:
+```
+$ ./twampy.py --help
+usage: twampy.py [-h] [-v]
+                 {responder,sender,controller,controlclient,dscptable} ...
+
+positional arguments:
+  {responder,sender,controller,controlclient,dscptable}
+                        twampy sub-commands
+    responder           TWL responder
+    sender              TWL sender
+    controller          TWAMP controller
+    controlclient       TWAMP control client
+    dscptable           print DSCP table
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -v, --version         show program's version number and exit
+```
+
+Specific help:
+```
+$ ./twampy.py sender --help
+usage: twampy.py sender [-h] [-l filename] [-q | -v | -d]
+                        [--tos type-of-service] [--dscp dscp-value]
+                        [--ttl time-to-live] [--padding bytes]
+                        [--do-not-fragment] [-i msec] [-c packets]
+                        [remote-ip:port] [local-ip:port]
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -q, --quiet           disable logging
+  -v, --verbose         enhanced logging
+  -d, --debug           extensive logging
+
+Debug Options:
+  -l filename, --logfile filename
+                        Specify the logfile (default: <stdout>)
+
+IP socket options:
+  --tos type-of-service        IP TOS value
+  --dscp dscp-value            IP DSCP value
+  --ttl time-to-live           [1..128]
+  --padding bytes              IP/UDP mtu value
+  --do-not-fragment            keyword (do-not-fragment)
+
+TWL sender options:
+  remote-ip:port
+  local-ip:port
+  -i msec, --interval msec     [100,1000]
+  -c packets, --count packets  [1..9999]
+```
+
+
+
+## Usage example against SR OS TWAMP server
+Router configuration:
+```
+A:VSR# configure test-oam
+A:VSR>config>test-oam># info
+----------------------------------------------
+        twamp
+            server
+                prefix 0.0.0.0/0 create
+                exit
+                no shutdown
+            exit
+        exit
+----------------------------------------------
+```
+Running the test:
+```
+$ ./twampy.py controller 192.168.255.2
+===============================================================================
+Direction         Min         Max         Avg          Jitter     Loss
+-------------------------------------------------------------------------------
+  Outbound:       92.89ms    196.63ms     95.15ms       576us      0.0%
+  Inbound:            0us         0us         0us         0us      0.0%
+  Roundtrip:        339us    103.53ms      1.91ms       638us      0.0%
+-------------------------------------------------------------------------------
+                                                    Jitter Algorithm [RFC1889]
+===============================================================================
+```
