@@ -17,10 +17,10 @@ was developed to validate the Nokia SR OS TWAMP implementation.
 * TWAMP light Reflector
 
 ## Installation
-'''
+```
 $ git clone https://github.com/nokia/twampy
 Cloning into 'twampy'...
-'''
+```
 
 ##  Usage Notes
 Use padding to configure bidirectional packet/frame sizes:
@@ -36,9 +36,9 @@ Use padding value '-1' for IMIX traffic generation:
 
 L2 Size | Packets | Ratio(Packets) | Ratio(Volume)
 ---:|:---:| ---:| ---:
-64             7          58%               10%
-590            4          33%               55%
-1514           1          8%                35%
+64 | 7 | 58% | 10%
+590 | 4 | 33% | 55%
+1514 | 1 | 8% | 35%
 
 TOS/DSCP user settings neet to be enabled on WINDOWS:
 1. Open Registry Editor
@@ -50,7 +50,7 @@ TOS/DSCP user settings neet to be enabled on WINDOWS:
 4. Quit Registry Editor
 5. Restart you computer
 6. Command prompt for validation (capture needed)
-      # ping <ipaddress> -v 8
+      $ ping <ipaddress> -v 8
 Reference: http://support.microsoft.com/kb/248611
 
 DF flag implementation supports Linux und Windows. To support other
