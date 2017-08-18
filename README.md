@@ -45,9 +45,11 @@ TOS/DSCP user settings neet to be enabled on WINDOWS:
 2. Go to key:
       HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\TcpIp\Parameters
 3. Create new DWORD value:
+
 EntryName | Value
 --- | ---
 DisableUserTOSSetting | 0x00000000 (0)
+
 4. Quit Registry Editor
 5. Restart you computer
 6. Command prompt for validation (capture needed)
