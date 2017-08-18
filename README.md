@@ -45,11 +45,14 @@ TOS/DSCP user settings neet to be enabled on WINDOWS:
 2. Go to key:
       HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\TcpIp\Parameters
 3. Create new DWORD value:
+
       EntryName: DisableUserTOSSetting
+      
       Value:     0x00000000 (0)
 4. Quit Registry Editor
 5. Restart you computer
 6. Command prompt for validation (capture needed)
+
       $ ping <ipaddress> -v 8
 Reference: http://support.microsoft.com/kb/248611
 
@@ -75,6 +78,7 @@ code such as sockopts need to be added and validated.
 * Support for RFC 6038 Reflect Octets Symmetrical Size
 
 ## Error codes (as per RFC 4656)
+Error Code | Description
 --- | ---
 0 | OK
 1 | Failure, reason unspecified (catch-all).
