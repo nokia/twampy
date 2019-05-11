@@ -148,13 +148,37 @@ def parse_addr(addr, default_port=20000):
         # IPv6 address without port
         return addr, default_port, 6
     elif ':' in addr:
-        # IPv4 address with port
+        # IPv4 address with port, or fqdn + port
         ip, port = addr.split(':')
-        return ip, int(port), 4
+        if ip == '':
+            return ip, int(port), 0
+        else:
+            try:
+                socket.inet_pton(socket.AF_INET, ip)
+                #is INET
+                return ip, int(port), 4
+            except:
+                resolved_ip = socket.getaddrinfo(ip, None)[0][4][0] #first IP returned, INET6 for dual-stack 
+                try:
+                    socket.inet_pton(socket.AF_INET, resolved_ip)
+                    #is INET
+                    return resolved_ip, int(port), 4
+                except: # is INET6
+                    return resolved_ip, int(port), 6
     else:
-        # IPv4 address without port
-        return addr, default_port, 4
-
+        # IPv4 address without port, or fqdn
+        try:
+            socket.inet_pton(socket.AF_INET, addr)
+            #is INET
+            return addr, int(port), 4
+        except:
+            resolved_ip = socket.getaddrinfo(addr, None)[0][4][0] #first IP returned, INET6 for dual-stack
+            try:
+                socket.inet_pton(socket.AF_INET, resolved_ip)
+                #is INET
+                return resolved_ip, default_port, 4
+            except:#is INET6
+                return resolved_ip, default_port, 6
 #############################################################################
 
 
@@ -307,7 +331,7 @@ class twampySessionSender(udpSession):
         #   get Address, UDP port, IP version from near_end/far_end attributes
         sip, spt, sipv = parse_addr(args.near_end, 20000)
         rip, rpt, ripv = parse_addr(args.far_end,  20001)
-
+        
         ipversion = 6 if (sipv == 6) or (ripv == 6) else 4
         udpSession.__init__(self, sip, spt, args.tos, args.ttl, args.do_not_fragment, ipversion)
 
