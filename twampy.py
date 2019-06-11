@@ -91,7 +91,7 @@ import select
 #############################################################################
 
 if (sys.platform == "win32"):
-    time0 = time.time() - time.clock()
+    time0 = time.time() - time.perf_counter()
 
 if sys.version_info > (3,):
     long = int
@@ -103,7 +103,7 @@ ALLBITS = long(0xFFFFFFFF)       # To calculate 32bit fraction of the second
 
 def now():
     if (sys.platform == "win32"):
-        return time.clock() + time0
+        return time.perf_counter() + time0
     return time.time()
 
 
