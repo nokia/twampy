@@ -173,3 +173,8 @@ Direction         Min         Max         Avg          Jitter     Loss
                                                     Jitter Algorithm [RFC1889]
 ===============================================================================
 ```
+
+
+## License
+
+This project is licensed under the BSD-3-Clause license - see the [LICENSE](https://github.com/nokia/twampy/blob/master/LICENSE).
