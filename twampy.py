@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/local/bin/python3
 
 ##############################################################################
 #                                                                            #
@@ -7,6 +7,7 @@
 #  History Change Log:                                                       #
 #                                                                            #
 #    1.0  [SW]  2017/08/18    first version                                  #
+#    1.1  [SW]  2024/12/02    updates for python3.12                         #
 #                                                                            #
 #  Objective:                                                                #
 #    Python implementation of the Two-Way Active Measurement Protocol        #
@@ -51,6 +52,7 @@
 #    - Validation with other operating systems (such as FreeBSD)             #
 #    - Support for RFC 5938 Individual Session Control                       #
 #    - Support for RFC 6038 Reflect Octets Symmetrical Size                  #
+#    - Support for RFC 8762 Simple 2-Way Active Measurement Protocol (STAMP) #
 #                                                                            #
 #  License:                                                                  #
 #    Licensed under the BSD license                                          #
@@ -535,25 +537,25 @@ class twampyControlClient:
 
 def twl_responder(args):
     reflector = twampySessionReflector(args)
-    reflector.setDaemon(True)
-    reflector.setName("twl_responder")
+    reflector.daemon = True
+    reflector.name = "twl_responder"
     reflector.start()
 
     signal.signal(signal.SIGINT, reflector.stop)
 
-    while reflector.isAlive():
+    while reflector.is_alive():
         time.sleep(0.1)
 
 
 def twl_sender(args):
     sender = twampySessionSender(args)
-    sender.setDaemon(True)
-    sender.setName("twl_responder")
+    sender.daemon = True
+    sender.name = "twl_responder"
     sender.start()
 
     signal.signal(signal.SIGINT, sender.stop)
 
-    while sender.isAlive():
+    while sender.is_alive():
         time.sleep(0.1)
 
 
@@ -570,12 +572,12 @@ def twamp_controller(args):
         client.startSessions()
 
         sender = twampySessionSender(args)
-        sender.setDaemon(True)
-        sender.setName("twl_responder")
+        sender.daemon = True
+        sender.name = "twl_responder"
         sender.start()
         signal.signal(signal.SIGINT, sender.stop)
 
-        while sender.isAlive():
+        while sender.is_alive():
             time.sleep(0.1)
         time.sleep(5)
 
