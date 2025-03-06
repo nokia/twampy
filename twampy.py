@@ -693,7 +693,7 @@ if __name__ == '__main__':
     debug_parser = argparse.ArgumentParser(add_help=False)
 
     debug_options = debug_parser.add_argument_group("Debug Options")
-    debug_options.add_argument('-l', '--logfile', metavar='filename', type=argparse.FileType('wb', 0), default='-', help='Specify the logfile (default: <stdout>)')
+    debug_options.add_argument('-l', '--logfile', metavar='filename', type=argparse.FileType('w', 0), default='-', help='Specify the logfile (default: <stdout>)')
     group = debug_options.add_mutually_exclusive_group()
     group.add_argument('-q', '--quiet',   action='store_true', help='disable logging')
     group.add_argument('-v', '--verbose', action='store_true', help='enhanced logging')
