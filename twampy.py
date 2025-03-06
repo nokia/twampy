@@ -177,7 +177,7 @@ class udpSession(threading.Thread):
         self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         self.socket.bind((addr, port))
         if df:
-            if (sys.platform == "linux2"):
+            if (sys.platform == "linux"):
                 self.socket.setsockopt(socket.SOL_IP, 10, 2)
             elif (sys.platform == "win32"):
                 self.socket.setsockopt(socket.SOL_IP, 14, 1)
@@ -186,7 +186,7 @@ class udpSession(threading.Thread):
             else:
                 log.error("unsupported OS, ignore do-not-fragment option")
         else:
-            if (sys.platform == "linux2"):
+            if (sys.platform == "linux"):
                 self.socket.setsockopt(socket.SOL_IP, 10, 0)
 
     def bind6(self, addr, port, tos, ttl):
