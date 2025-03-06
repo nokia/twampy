@@ -95,12 +95,9 @@ import select
 if (sys.platform == "win32"):
     time0 = time.time() - time.clock()
 
-if sys.version_info > (3,):
-    long = int
-
 # Constants to convert between python timestamps and NTP 8B binary format [RFC1305]
-TIMEOFFSET = long(2208988800)    # Time Difference: 1-JAN-1900 to 1-JAN-1970
-ALLBITS = long(0xFFFFFFFF)       # To calculate 32bit fraction of the second
+TIMEOFFSET = 2208988800     # Time Difference: 1-JAN-1900 to 1-JAN-1970
+ALLBITS = 0xFFFFFFFF        # To calculate 32bit fraction of the second
 
 
 def now():
@@ -132,7 +129,7 @@ def dp(ms):
         return "%7.2fsec" % float(ms / 1000)
     if abs(ms) > 1:
         return "%8.2fms" % ms
-    return "%8dus" % long(ms * 1000)
+    return "%8dus" % int(ms * 1000)
 
 
 def parse_addr(addr, default_port=20000):
@@ -362,8 +359,8 @@ class twampySessionSender(udpSession):
             if (t1 >= schedule) and (idx < self.count):
                 schedule = schedule + self.interval
 
-                data = struct.pack('!L2IH', idx, long(TIMEOFFSET + t1), long((t1 - long(t1)) * ALLBITS), 0x3fff)
-                pbytes = zeros(self.padmix[long(len(self.padmix) * random.random())])
+                data = struct.pack('!L2IH', idx, int(TIMEOFFSET + t1), int((t1 - int(t1)) * ALLBITS), 0x3fff)
+                pbytes = zeros(self.padmix[int(len(self.padmix) * random.random())])
 
                 self.sendto(data + pbytes, (self.remote_addr, self.remote_port))
                 log.info("Sent to %s [sseq=%d]", self.remote_addr, idx)
@@ -402,8 +399,8 @@ class twampySessionReflector(udpSession):
                 data, address = self.recvfrom()
 
                 t2 = now()
-                sec = long(TIMEOFFSET + t2)             # seconds since 1-JAN-1900
-                msec = long((t2 - long(t2)) * ALLBITS)  # 32bit fraction of the second
+                sec = int(TIMEOFFSET + t2)              # seconds since 1-JAN-1900
+                msec = int((t2 - int(t2)) * ALLBITS)    # 32bit fraction of the second
 
                 sseq = struct.unpack('!I', data[0:4])[0]
                 t1 = time_ntp2py(data[4:12])
@@ -421,7 +418,7 @@ class twampySessionReflector(udpSession):
                     idx = index[address]
 
                 rdata = struct.pack('!L2I2H2I', idx, sec, msec, 0x001, 0, sec, msec)
-                pbytes = zeros(self.padmix[long(len(self.padmix) * random.random())])
+                pbytes = zeros(self.padmix[int(len(self.padmix) * random.random())])
                 self.sendto(rdata + data[0:14] + pbytes, address)
 
                 index[address] = idx + 1
