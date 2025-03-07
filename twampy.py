@@ -93,7 +93,7 @@ import select
 #############################################################################
 
 if (sys.platform == "win32"):
-    time0 = time.time() - time.clock()
+    time0 = time.time() - time.perf_counter()
 
 # Constants to convert between python timestamps and NTP 8B binary format [RFC1305]
 TIMEOFFSET = 2208988800     # Time Difference: 1-JAN-1900 to 1-JAN-1970
@@ -102,7 +102,7 @@ ALLBITS = 0xFFFFFFFF        # To calculate 32bit fraction of the second
 
 def now():
     if (sys.platform == "win32"):
-        return time.clock() + time0
+        return time.perf_counter() + time0
     return time.time()
 
 
