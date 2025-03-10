@@ -747,6 +747,10 @@ if __name__ == '__main__':
 
     options = parser.parse_args()
 
+    if not vars(options):
+        parser.print_help()
+        parser.exit(1)
+
     if not options.parseop:
         print(options)
         options.func()
