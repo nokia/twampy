@@ -17,7 +17,7 @@ def test_version():
     result = run_twampy("--version")
 
     assert result.returncode == 0, f"Version command failed: {result.stderr}"
-    assert "twampy" in result.stdout.lower() or "1.0" in result.stdout
+    assert "twampy" in result.stdout.lower() or "1.2" in result.stdout
 
 
 def test_help():
