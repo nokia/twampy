@@ -1,168 +1,41 @@
-# Python tools for TWAMP and TWAMP light
-Twampy is a Python implementation of the Two-Way Active Measurement
-Protocol (TWAMP and TWAMP light) as defined in RFC5357. This tool
-was developed to validate the Nokia SR OS TWAMP implementation.
+# twampy
 
-## Supported features
-* unauthenticated mode
-* IPv4 and IPv6
-* Support for DSCP, Padding, JumboFrames, IMIX
-* Support to set DF flag (don't fragment)
-* Basic Delay, Jitter, Loss statistics (jitter according to RFC1889)
+**Python implementation of TWAMP/TWAMP-light (RFC 5357) and STAMP (RFC 8762)**
 
-##  Modes of operation
-* TWAMP Controller
-* TWAMP Control Client
-* TWAMP Test Session Sender
-* TWAMP light Reflector
+twampy is a network measurement tool for latency, jitter, and packet loss testing. Originally developed to validate Nokia SR OS and SR Linux TWAMP implementations, it provides a standards-compliant implementation of the Two-Way Active Measurement Protocol and Simple Two-Way Active Measurement Protocol.
 
-## Installation
-```
-$ git clone https://github.com/nokia/twampy
-Cloning into 'twampy'...
-```
+## Features
 
-##  Usage Notes
-Use padding to configure bidirectional packet/frame sizes:
+- ✅ **Multiple Operation Modes** - Controller, Control Client, Session Sender, Reflector
+- ✅ **Dual Stack** - IPv4 and IPv6 support
+- ✅ **QoS Testing** - DSCP/TOS marking for quality of service validation
+- ✅ **Flexible Sizing** - Custom padding, jumbo frames, IMIX traffic patterns
+- ✅ **RFC Compliant** - Implements RFC 5357 (TWAMP), RFC 8762 (STAMP), RFC 8972 (STAMP Extensions)
+- ✅ **No Dependencies** - Uses Python standard library only
 
-IP Version | Padding | Packet Size | Frame Size
-:---:|:---:| --- | ---
-IPv4 | >=27 | Padding+42 | Padding+56
-IPv6 | >=27 | Padding+62 | Padding+76
+## Quick Start
 
-Padding default is 27 bytes (to enforce bidirectional behavior).
+### Installation
 
-Use padding value '-1' for IMIX traffic generation:
-
-L2 Size | Packets | Ratio(Packets) | Ratio(Volume)
----:|:---:| ---:| ---:
-64 | 7 | 58% | 10%
-590 | 4 | 33% | 55%
-1514 | 1 | 8% | 35%
-
-TOS/DSCP user settings neet to be enabled on WINDOWS:
-1. Open Registry Editor
-2. Go to key:
-      HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\TcpIp\Parameters
-3. Create new DWORD value:
-
-EntryName | Value
---- | ---
-DisableUserTOSSetting | 0x00000000 (0)
-
-4. Quit Registry Editor
-5. Restart you computer
-6. Command prompt for validation (capture needed)
-
-      $ ping <ipaddress> -v 8
-      
-Reference: http://support.microsoft.com/kb/248611
-
-DF flag implementation supports Linux und Windows. To support other
-Operating Systems such as OS X (darwin) or FreeBSD the according
-code such as sockopts need to be added and validated.
-
-## Possible Improvements
-* authenticated and encrypted mode
-* sending intervals variation
-* enhanced statistics
-  * bining and interim statistics
-  * late arrived packets
-  * smokeping like graphics
-  * median on latency
-  * improved jitter (rfc3393, statistical variance formula):
-    jitter:=sqrt(SumOf((D[i]-average(D))^2)/ReceivedProbesCount)
-* daemon mode: NETCONF/YANG controlled, ...
-* enhanced failure handling (catch exceptions)
-* per probe time-out for statistics (late arrival)
-* Validation with other operating systems (such as FreeBSD)
-* Support for RFC 5938 Individual Session Control
-* Support for RFC 6038 Reflect Octets Symmetrical Size
-
-## Error codes (as per RFC 4656)
-Error Code | Description
---- | ---
-0 | OK
-1 | Failure, reason unspecified (catch-all).
-2 | Internal error.
-3 | Some aspect of request is not supported.
-4 | Cannot perform request due to permanent resource limitations.
-5 | Cannot perform request due to temporary resource limitations.
-
-## Usage example: getting help
-Help on modes of operation:
-```
-$ ./twampy.py --help
-usage: twampy.py [-h] [-v]
-                 {responder,sender,controller,controlclient,dscptable} ...
-
-positional arguments:
-  {responder,sender,controller,controlclient,dscptable}
-                        twampy sub-commands
-    responder           TWL responder
-    sender              TWL sender
-    controller          TWAMP controller
-    controlclient       TWAMP control client
-    dscptable           print DSCP table
-
-optional arguments:
-  -h, --help            show this help message and exit
-  -v, --version         show program's version number and exit
+```bash
+# Clone and install
+git clone https://github.com/nokia/twampy
+cd twampy
+pip install -e .
 ```
 
-Specific help:
-```
-$ ./twampy.py sender --help
-usage: twampy.py sender [-h] [-l filename] [-q | -v | -d]
-                        [--tos type-of-service] [--dscp dscp-value]
-                        [--ttl time-to-live] [--padding bytes]
-                        [--do-not-fragment] [-i msec] [-c packets]
-                        [remote-ip:port] [local-ip:port]
+### Basic Usage
 
-optional arguments:
-  -h, --help            show this help message and exit
-  -q, --quiet           disable logging
-  -v, --verbose         enhanced logging
-  -d, --debug           extensive logging
+```bash
+# Start a reflector
+twampy responder :862
 
-Debug Options:
-  -l filename, --logfile filename
-                        Specify the logfile (default: <stdout>)
-
-IP socket options:
-  --tos type-of-service        IP TOS value
-  --dscp dscp-value            IP DSCP value
-  --ttl time-to-live           [1..128]
-  --padding bytes              IP/UDP mtu value
-  --do-not-fragment            keyword (do-not-fragment)
-
-TWL sender options:
-  remote-ip:port
-  local-ip:port
-  -i msec, --interval msec     [100,1000]
-  -c packets, --count packets  [1..9999]
+# Run a test (from another terminal/host)
+twampy controller 192.168.1.100
 ```
 
-
-
-## Usage example against SR OS TWAMP server
-Router configuration:
+Example output:
 ```
-A:VSR# configure test-oam
-A:VSR>config>test-oam># info
-----------------------------------------------
-        twamp
-            server
-                prefix 0.0.0.0/0 create
-                exit
-                no shutdown
-            exit
-        exit
-----------------------------------------------
-```
-Running the test:
-```
-$ ./twampy.py controller 192.168.255.2
 ===============================================================================
 Direction         Min         Max         Avg          Jitter     Loss
 -------------------------------------------------------------------------------
@@ -174,7 +47,86 @@ Direction         Min         Max         Avg          Jitter     Loss
 ===============================================================================
 ```
 
+## Command Overview
+
+| Command | Description |
+|---------|-------------|
+| `controller` | Full TWAMP controller (control + sender) |
+| `sender` | TWAMP light session sender |
+| `responder` | TWAMP light reflector |
+| `controlclient` | TWAMP control client only |
+| `dscptable` | Display DSCP/QoS reference table |
+
+## Common Options
+```bash
+# Send 1000 packets at 10ms intervals with DSCP EF marking
+twampy sender 192.168.1.100 --count 1000 --interval 10 --dscp ef
+
+# Run controller with verbose logging
+twampy controller 192.168.1.100 --verbose
+
+# Start reflector on custom port
+twampy responder :20000
+```
+
+## Requirements
+
+- Python 3.11 or higher
+- No external dependencies (standard library only)
+
+## Documentation
+
+📚 **[Full Documentation](https://nokia.github.io/twampy/)** (or see [docs/](docs/))
+
+- [Installation Guide](docs/user-guide/installation.md) - Detailed installation instructions
+- [Usage Guide](docs/user-guide/usage.md) - Examples and use cases
+- [Configuration Reference](docs/user-guide/configuration.md) - All parameters explained
+- [Error Codes](docs/reference/error-codes.md) - Protocol error reference
+- [DSCP Table](docs/reference/dscp-table.md) - QoS values reference
+
+## Platform Support
+
+| Platform | Status | Notes |
+|----------|:------:|-------|
+| Linux | ✅ Full | All features supported |
+| Windows | ✅ Full | Requires registry mod for DSCP |
+| macOS | ⚠️ Partial | DF flag not supported |
+| FreeBSD | ⚠️ Partial | DF flag not supported |
+
+## Limitations
+
+- Software timestamping only (typical accuracy: 100μs - 2ms)
+- Unauthenticated mode only (no encryption/authentication)
+
 
 ## License
 
 This project is licensed under the BSD-3-Clause license - see the [LICENSE](https://github.com/nokia/twampy/blob/master/LICENSE).
+
+twampy can be imported and used in Python programs:
+
+```python
+import twampy
+
+# Your code here (API documentation coming soon)
+```
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit issues or pull requests.
+
+## License
+
+Licensed under the BSD-3-Clause License. See [LICENSE](LICENSE) for details.
+
+## Author
+
+**Sven Wisotzky** - Nokia
+
+## References
+
+- [RFC 5357 - TWAMP](https://tools.ietf.org/html/rfc5357)
+- [RFC 8762 - STAMP](https://tools.ietf.org/html/rfc8762)
+- [RFC 8972 - STAMP Optional Extensions (Session ID)](https://tools.ietf.org/html/rfc8972)
+- [RFC 4656 - OWAMP](https://tools.ietf.org/html/rfc4656)
+- [RFC 1889 - RTP (Jitter Calculation)](https://tools.ietf.org/html/rfc1889)
