@@ -1,5 +1,5 @@
 site_name: twampy Documentation
-site_description: Python implementation of TWAMP/TWAMP-light (RFC 5357)
+site_description: Python implementation of TWAMP/STAMP
 site_author: Sven Wisotzky
 repo_url: https://github.com/nokia/twampy
 repo_name: nokia/twampy

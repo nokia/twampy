@@ -16,11 +16,11 @@ classifiers = [
     "Development Status :: 5 - Production/Stable",
     "Intended Audience :: Telecommunications Industry",
     "Intended Audience :: System Administrators",
-    "License :: OSI Approved :: BSD License",
+    "License :: OSI Approved :: BSD 3-clause License",
     "Operating System :: OS Independent",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.11",
-    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.14",
     "Topic :: System :: Networking :: Monitoring",
 ]
 keywords = ["twamp", "stamp", "network", "measurement", "latency", "rfc5357", "rfc8762"]
@@ -56,7 +56,7 @@ where = ["src"]
 
 [tool.ruff]
 line-length = 120
-target-version = "py311"
+target-version = "py311"  # Keep at 3.11 for backward compatibility
 
 [tool.ruff.lint]
 select = [

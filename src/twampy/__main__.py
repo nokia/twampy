@@ -46,14 +46,6 @@ Licensed under the BSD-3-Clause License
 See LICENSE file for details
 """
 
-__title__ = "twampy"
-__version__ = "1.2"
-__status__ = "released"
-__author__ = "Sven Wisotzky"
-__date__ = "2026 January 7th"
-
-#############################################################################
-
 import argparse
 import binascii
 import logging
@@ -66,6 +58,8 @@ import struct
 import sys
 import threading
 import time
+
+from twampy import __version__
 
 #############################################################################
 
@@ -862,7 +856,7 @@ def main():
         "-l",
         "--logfile",
         metavar="filename",
-        type=argparse.FileType("w", 0),
+        type=argparse.FileType("w"),
         default="-",
         help="Specify the logfile (default: <stdout>)",
     )

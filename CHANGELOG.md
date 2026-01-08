@@ -5,6 +5,27 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3] - 2026-01-08
+
+### Added
+- Automated GitHub Actions release workflow for version bumping
+- Test suite for version consistency validation
+- Version consistency test across package, CLI, and metadata
+
+### Changed
+- **Python support**: Now validates against Python 3.11 and 3.14 (dropped 3.12)
+- Implemented DRY principles for version management (single source of truth in pyproject.toml)
+- Removed non-standard metadata variables (__title__, __status__, __date__, __url__)
+- Simplified metadata to standard Python conventions (__version__, __author__, __license__, __copyright__)
+- Version fallback changed from "1.2.dev" to "0.0.0-dev" (best practice)
+
+### Fixed
+- **Python 3.13+ compatibility**: Removed buffering argument from `argparse.FileType()`
+
+### Documentation
+- Updated copilot instructions with version management and metadata guidelines
+- Enhanced installation guide with Python 3.14 testing information
+
 ## [1.2] - 2026-01-07
 
 ### Added
@@ -43,7 +64,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Pre-configured linting and formatting tools
 - Automated test execution in CI/CD
 - Cross-platform testing (Linux, Windows, macOS)
-- Python 3.11 and 3.12 support validation
+- Python 3.11 and 3.14 support validation
 - Clear contributing guidelines in CI documentation
 
 ## [1.1] - 2024-12-02
