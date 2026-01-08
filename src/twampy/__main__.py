@@ -154,7 +154,7 @@ class UdpSession(threading.Thread):
         self.socket.bind((addr, port))
         # Set TTL and TOS after binding (required for Windows compatibility)
         self.socket.setsockopt(socket.IPPROTO_IP, socket.IP_TOS, tos)
-        self.socket.setsockopt(socket.SOL_IP, socket.IP_TTL, ttl)
+        self.socket.setsockopt(socket.IPPROTO_IP, socket.IP_TTL, ttl)
         if df:
             if sys.platform == "linux":
                 self.socket.setsockopt(socket.SOL_IP, 10, 2)
