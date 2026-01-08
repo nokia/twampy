@@ -71,7 +71,7 @@ twampy responder :20000
 
 ## Requirements
 
-- Python 3.11 or higher
+- Python 3.11 or higher (tested with 3.11 and 3.14)
 - No external dependencies (standard library only)
 
 ## Documentation

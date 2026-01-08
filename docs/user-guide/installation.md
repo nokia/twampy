@@ -4,7 +4,7 @@ This guide covers how to install and uninstall twampy on your system.
 
 ## Requirements
 
-- **Python 3.11 or higher**
+- **Python 3.11 or higher** (tested with 3.11 and 3.14)
 - **No external dependencies** - twampy uses only Python standard library modules
 
 ## Installation Methods

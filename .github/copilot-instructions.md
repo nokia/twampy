@@ -100,3 +100,37 @@ twampy/
 - Run `ruff check --fix` and `ruff format` before committing
 - Run `pytest -v` to ensure all tests pass
 - Update documentation and CHANGELOG.md for user-facing changes
+
+## Version Management
+
+- **Single source of truth**: Version is defined **only** in `pyproject.toml`
+- Python code reads version dynamically using `importlib.metadata.version()`
+- To bump version: Update `version = "X.Y"` in `pyproject.toml` only
+- Test suite verifies version consistency across package, CLI, and metadata
+- Never hardcode version numbers in Python files
+
+### Automated Release Process
+
+1. Update CHANGELOG.md with release notes
+2. Go to GitHub Actions → Release workflow
+3. Click "Run workflow" and enter version number (e.g., 1.3)
+4. Workflow automatically:
+   - Updates version in pyproject.toml
+   - Creates git commit and tag
+   - Creates GitHub Release
+   - Builds and publishes to PyPI (if PYPI_TOKEN configured)
+
+## Package Metadata
+
+- **Standard Python metadata** (following PEP 8 conventions):
+  - `__version__` - Version string (read from pyproject.toml)
+  - `__author__` - Author name
+  - `__license__` - License identifier (SPDX format)
+  - `__copyright__` - Copyright statement
+- **Non-standard metadata removed**: `__title__`, `__status__`, `__date__`, `__url__`
+  - Package name is in pyproject.toml
+  - Release status tracked via version numbers
+  - Dates tracked via git and CHANGELOG.md
+  - URLs defined in pyproject.toml `[project.urls]`
+- All metadata defined in `src/twampy/__init__.py`
+- Other modules import from `__init__.py` (DRY principle)
