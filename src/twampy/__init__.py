@@ -11,7 +11,7 @@ defined in RFC 8762, and STAMP Optional Extensions as defined in RFC 8972.
 Developed for validation of Nokia SR OS and SR Linux TWAMP/STAMP implementations.
 """
 
-from importlib.metadata import version, PackageNotFoundError
+from importlib.metadata import PackageNotFoundError, version
 
 try:
     __version__ = version("twampy")

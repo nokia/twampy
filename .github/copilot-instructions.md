@@ -97,7 +97,8 @@ twampy/
 - Test against Nokia SR OS and SR Linux when possible
 - Document platform-specific behavior
 - Keep code simple and readable
-- Run `ruff check --fix` and `ruff format` before committing
+- **Always run `ruff check --fix` and `ruff format` before committing**
+- **Validate all changes with ruff to catch import sorting and unused imports**
 - Run `pytest -v` to ensure all tests pass
 - Update documentation and CHANGELOG.md for user-facing changes
 

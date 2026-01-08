@@ -46,10 +46,6 @@ Licensed under the BSD-3-Clause License
 See LICENSE file for details
 """
 
-from twampy import __version__, __author__, __license__, __copyright__
-
-#############################################################################
-
 import argparse
 import binascii
 import logging
@@ -62,6 +58,8 @@ import struct
 import sys
 import threading
 import time
+
+from twampy import __version__
 
 #############################################################################
 
