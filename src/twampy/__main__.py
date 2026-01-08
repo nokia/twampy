@@ -851,6 +851,7 @@ cp63           63             1111 1100      FC
 
 #############################################################################
 
+
 def main():
     """Main entry point for the twampy CLI."""
     debug_parser = argparse.ArgumentParser(add_help=False)
@@ -971,6 +972,14 @@ def main():
             options.tos = dscpmap[options.dscp]
         else:
             parser.error(f"Invalid DSCP Value '{options.dscp}'")
+
+    # Ensure socket options have valid integer values
+    if not hasattr(options, "tos") or options.tos is None:
+        options.tos = 0x88
+    if not hasattr(options, "ttl") or options.ttl is None:
+        options.ttl = 64
+    if not hasattr(options, "do_not_fragment"):
+        options.do_not_fragment = False
 
     options.func(options)
 
