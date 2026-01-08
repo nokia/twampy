@@ -1,0 +1,1327 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Python implementation of TWAMP/TWAMP-light (RFC 5357)">
+      
+      
+        <meta name="author" content="Sven Wisotzky">
+      
+      
+      
+        <link rel="prev" href="../../user-guide/configuration/">
+      
+      
+        <link rel="next" href="../dscp-table/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>Error Codes - twampy Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#error-codes" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="twampy Documentation" class="md-header__button md-logo" aria-label="twampy Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            twampy Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Error Codes
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/nokia/twampy" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    nokia/twampy
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../user-guide/installation/" class="md-tabs__link">
+          
+  
+  
+  User Guide
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="./" class="md-tabs__link">
+          
+  
+  
+  Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="twampy Documentation" class="md-nav__button md-logo" aria-label="twampy Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    twampy Documentation
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/nokia/twampy" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    nokia/twampy
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    User Guide
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    User Guide
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user-guide/installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Installation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user-guide/usage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Usage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user-guide/configuration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Error Codes
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Error Codes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#error-code-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Error Code Reference
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#error-code-details" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Error Code Details
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Error Code Details">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#code-0-ok" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Code 0: OK
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#code-1-failure-unspecified" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Code 1: Failure (Unspecified)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#code-2-internal-error" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Code 2: Internal Error
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#code-3-not-supported" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Code 3: Not Supported
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#code-4-permanent-resource-limitation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Code 4: Permanent Resource Limitation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#code-5-temporary-resource-limitation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Code 5: Temporary Resource Limitation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#error-handling-best-practices" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Error Handling Best Practices
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Error Handling Best Practices">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#for-users" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        For Users
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#for-developers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        For Developers
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-error-scenarios" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example Error Scenarios
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Example Error Scenarios">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#scenario-1-connection-refused" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scenario 1: Connection Refused
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scenario-2-authenticated-mode-not-supported" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scenario 2: Authenticated Mode Not Supported
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scenario-3-too-many-sessions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scenario 3: Too Many Sessions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scenario-4-temporary-overload" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scenario 4: Temporary Overload
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Related References
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dscp-table/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DSCP Table
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#error-code-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Error Code Reference
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#error-code-details" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Error Code Details
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Error Code Details">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#code-0-ok" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Code 0: OK
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#code-1-failure-unspecified" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Code 1: Failure (Unspecified)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#code-2-internal-error" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Code 2: Internal Error
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#code-3-not-supported" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Code 3: Not Supported
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#code-4-permanent-resource-limitation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Code 4: Permanent Resource Limitation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#code-5-temporary-resource-limitation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Code 5: Temporary Resource Limitation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#error-handling-best-practices" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Error Handling Best Practices
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Error Handling Best Practices">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#for-users" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        For Users
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#for-developers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        For Developers
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-error-scenarios" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example Error Scenarios
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Example Error Scenarios">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#scenario-1-connection-refused" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scenario 1: Connection Refused
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scenario-2-authenticated-mode-not-supported" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scenario 2: Authenticated Mode Not Supported
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scenario-3-too-many-sessions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scenario 3: Too Many Sessions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scenario-4-temporary-overload" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scenario 4: Temporary Overload
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Related References
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="error-codes">Error Codes<a class="headerlink" href="#error-codes" title="Permanent link">&para;</a></h1>
+<p>TWAMP error codes as defined in RFC 4656 (OWAMP) and used in RFC 5357 (TWAMP).</p>
+<h2 id="error-code-reference">Error Code Reference<a class="headerlink" href="#error-code-reference" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Code</th>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">0</td>
+<td><strong>OK</strong></td>
+<td>Success - No error occurred</td>
+</tr>
+<tr>
+<td style="text-align: center;">1</td>
+<td><strong>Failure</strong></td>
+<td>Failure, reason unspecified (catch-all)</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td><strong>Internal Error</strong></td>
+<td>Internal error occurred in the implementation</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td><strong>Not Supported</strong></td>
+<td>Some aspect of the request is not supported</td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td><strong>Permanent Resource Limitation</strong></td>
+<td>Cannot perform request due to permanent resource limitations</td>
+</tr>
+<tr>
+<td style="text-align: center;">5</td>
+<td><strong>Temporary Resource Limitation</strong></td>
+<td>Cannot perform request due to temporary resource limitations</td>
+</tr>
+</tbody>
+</table>
+<h2 id="error-code-details">Error Code Details<a class="headerlink" href="#error-code-details" title="Permanent link">&para;</a></h2>
+<h3 id="code-0-ok">Code 0: OK<a class="headerlink" href="#code-0-ok" title="Permanent link">&para;</a></h3>
+<p><strong>Meaning</strong>: The operation completed successfully.</p>
+<p><strong>Action</strong>: None required. This indicates normal operation.</p>
+<p><strong>Example scenarios</strong>:
+- Connection established successfully
+- Test session started successfully
+- All packets transmitted and received</p>
+<hr />
+<h3 id="code-1-failure-unspecified">Code 1: Failure (Unspecified)<a class="headerlink" href="#code-1-failure-unspecified" title="Permanent link">&para;</a></h3>
+<p><strong>Meaning</strong>: A general failure occurred, but the specific reason is not identified or does not fit other categories.</p>
+<p><strong>Possible causes</strong>:
+- Network connectivity issues
+- Unexpected protocol violations
+- General communication errors</p>
+<p><strong>Troubleshooting</strong>:
+1. Check network connectivity between endpoints
+2. Verify firewall rules allow TWAMP traffic
+3. Check logs for specific error messages
+4. Verify both endpoints are using compatible TWAMP versions</p>
+<hr />
+<h3 id="code-2-internal-error">Code 2: Internal Error<a class="headerlink" href="#code-2-internal-error" title="Permanent link">&para;</a></h3>
+<p><strong>Meaning</strong>: An internal error occurred within the TWAMP implementation.</p>
+<p><strong>Possible causes</strong>:
+- Software bug
+- Memory allocation failure
+- System resource exhaustion
+- Unexpected exception</p>
+<p><strong>Troubleshooting</strong>:
+1. Check system logs for errors
+2. Verify sufficient system resources (memory, CPU)
+3. Try restarting the TWAMP process
+4. Report bug if reproducible</p>
+<hr />
+<h3 id="code-3-not-supported">Code 3: Not Supported<a class="headerlink" href="#code-3-not-supported" title="Permanent link">&para;</a></h3>
+<p><strong>Meaning</strong>: The requested feature or parameter is not supported by this implementation.</p>
+<p><strong>Possible causes</strong>:
+- Requesting authenticated mode (not implemented in twampy)
+- Requesting encrypted mode (not implemented)
+- Using unsupported protocol features
+- Incompatible protocol version</p>
+<p><strong>Troubleshooting</strong>:
+1. Verify you're using unauthenticated mode
+2. Check that both endpoints support the requested features
+3. Review RFC 5357 for optional vs required features
+4. Use compatible protocol parameters</p>
+<p><strong>twampy specific limitations</strong>:
+- Only unauthenticated mode is supported
+- Authenticated and encrypted modes return this error
+- Some RFC 5938 and RFC 6038 features not supported</p>
+<hr />
+<h3 id="code-4-permanent-resource-limitation">Code 4: Permanent Resource Limitation<a class="headerlink" href="#code-4-permanent-resource-limitation" title="Permanent link">&para;</a></h3>
+<p><strong>Meaning</strong>: The request cannot be performed due to permanent resource constraints.</p>
+<p><strong>Possible causes</strong>:
+- Maximum number of concurrent sessions reached
+- Insufficient port range available
+- Hardware limitations
+- License restrictions (commercial implementations)</p>
+<p><strong>Troubleshooting</strong>:
+1. Reduce number of concurrent sessions
+2. Check system configuration limits
+3. Verify no port conflicts exist
+4. Review system resource allocation</p>
+<hr />
+<h3 id="code-5-temporary-resource-limitation">Code 5: Temporary Resource Limitation<a class="headerlink" href="#code-5-temporary-resource-limitation" title="Permanent link">&para;</a></h3>
+<p><strong>Meaning</strong>: The request cannot be performed right now due to temporary resource constraints, but may succeed if retried later.</p>
+<p><strong>Possible causes</strong>:
+- Temporary memory shortage
+- CPU overload
+- Network buffer exhaustion
+- Rate limiting</p>
+<p><strong>Troubleshooting</strong>:
+1. Wait and retry the operation
+2. Reduce packet rate or session count
+3. Check system load (CPU, memory, network)
+4. Implement exponential backoff for retries</p>
+<hr />
+<h2 id="error-handling-best-practices">Error Handling Best Practices<a class="headerlink" href="#error-handling-best-practices" title="Permanent link">&para;</a></h2>
+<h3 id="for-users">For Users<a class="headerlink" href="#for-users" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>Check error code</strong>: Identify the specific error code returned</li>
+<li><strong>Review logs</strong>: Enable verbose or debug logging for details</li>
+<li><strong>Verify configuration</strong>: Ensure parameters are within supported ranges</li>
+<li><strong>Test connectivity</strong>: Verify network path to remote endpoint</li>
+<li><strong>Retry appropriately</strong>: For code 5, retry after a delay</li>
+</ol>
+<h3 id="for-developers">For Developers<a class="headerlink" href="#for-developers" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>Log error details</strong>: Include error code and context in logs</li>
+<li><strong>Provide meaningful messages</strong>: Translate error codes to user-friendly text</li>
+<li><strong>Implement retries</strong>: Automatically retry on code 5 errors</li>
+<li><strong>Validate inputs</strong>: Check parameters before sending requests</li>
+<li><strong>Handle gracefully</strong>: Don't crash on protocol errors</li>
+</ol>
+<h2 id="example-error-scenarios">Example Error Scenarios<a class="headerlink" href="#example-error-scenarios" title="Permanent link">&para;</a></h2>
+<h3 id="scenario-1-connection-refused">Scenario 1: Connection Refused<a class="headerlink" href="#scenario-1-connection-refused" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>twampy<span class="w"> </span>controller<span class="w"> </span><span class="m">192</span>.168.1.100
+Error:<span class="w"> </span>Connection<span class="w"> </span>refused<span class="w"> </span><span class="o">(</span>Code<span class="w"> </span><span class="m">1</span><span class="o">)</span>
+</code></pre></div>
+<p><strong>Cause</strong>: No TWAMP server listening on the target</p>
+<p><strong>Solution</strong>:
+<div class="highlight"><pre><span></span><code><span class="c1"># Verify server is running</span>
+netstat<span class="w"> </span>-ulnp<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="m">862</span>
+
+<span class="c1"># Start responder if needed</span>
+twampy<span class="w"> </span>responder<span class="w"> </span>:862
+</code></pre></div></p>
+<h3 id="scenario-2-authenticated-mode-not-supported">Scenario 2: Authenticated Mode Not Supported<a class="headerlink" href="#scenario-2-authenticated-mode-not-supported" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>twampy<span class="w"> </span>controller<span class="w"> </span><span class="m">192</span>.168.1.100
+Error:<span class="w"> </span>Authenticated<span class="w"> </span>mode<span class="w"> </span>not<span class="w"> </span>supported<span class="w"> </span><span class="o">(</span>Code<span class="w"> </span><span class="m">3</span><span class="o">)</span>
+</code></pre></div>
+<p><strong>Cause</strong>: Server requires authentication, but twampy only supports unauthenticated mode</p>
+<p><strong>Solution</strong>: Configure server for unauthenticated mode or use a different client</p>
+<h3 id="scenario-3-too-many-sessions">Scenario 3: Too Many Sessions<a class="headerlink" href="#scenario-3-too-many-sessions" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>twampy<span class="w"> </span>controller<span class="w"> </span><span class="m">192</span>.168.1.100
+Error:<span class="w"> </span>Maximum<span class="w"> </span>sessions<span class="w"> </span>reached<span class="w"> </span><span class="o">(</span>Code<span class="w"> </span><span class="m">4</span><span class="o">)</span>
+</code></pre></div>
+<p><strong>Cause</strong>: Server has reached its session limit</p>
+<p><strong>Solution</strong>: Wait for existing sessions to complete or increase server session limit</p>
+<h3 id="scenario-4-temporary-overload">Scenario 4: Temporary Overload<a class="headerlink" href="#scenario-4-temporary-overload" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>twampy<span class="w"> </span>sender<span class="w"> </span><span class="m">192</span>.168.1.100
+Error:<span class="w"> </span>Temporary<span class="w"> </span>resource<span class="w"> </span>limitation<span class="w"> </span><span class="o">(</span>Code<span class="w"> </span><span class="m">5</span><span class="o">)</span>
+</code></pre></div>
+<p><strong>Cause</strong>: Server is temporarily overloaded</p>
+<p><strong>Solution</strong>: Retry after a brief delay</p>
+<h2 id="related-references">Related References<a class="headerlink" href="#related-references" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="https://tools.ietf.org/html/rfc4656">RFC 4656 - OWAMP Protocol</a> - Error code definitions</li>
+<li><a href="https://tools.ietf.org/html/rfc5357">RFC 5357 - TWAMP Protocol</a> - TWAMP-specific usage</li>
+<li><a href="../../user-guide/usage/">Usage Guide</a> - Practical usage examples</li>
+<li><a href="../../user-guide/configuration/">Configuration Guide</a> - Parameter reference</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "search.suggest", "search.highlight"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
