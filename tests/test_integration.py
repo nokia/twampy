@@ -74,7 +74,11 @@ def test_sender_responder_integration():
 
     finally:
         # Stop responder gracefully
-        responder.send_signal(signal.SIGINT)
+        if sys.platform == "win32":
+            # Windows doesn't support SIGINT for subprocesses, use terminate instead
+            responder.terminate()
+        else:
+            responder.send_signal(signal.SIGINT)
         try:
             responder.wait(timeout=5)
         except subprocess.TimeoutExpired:
