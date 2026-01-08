@@ -150,10 +150,11 @@ class UdpSession(threading.Thread):
     def bind(self, addr, port, tos, ttl, df):
         log.debug("bind(addr=%s, port=%d, tos=%d, ttl=%d)", addr, port, tos, ttl)
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, socket.IPPROTO_UDP)
-        self.socket.setsockopt(socket.IPPROTO_IP, socket.IP_TOS, tos)
-        self.socket.setsockopt(socket.SOL_IP, socket.IP_TTL, ttl)
         self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         self.socket.bind((addr, port))
+        # Set TTL and TOS after binding (required for Windows compatibility)
+        self.socket.setsockopt(socket.IPPROTO_IP, socket.IP_TOS, tos)
+        self.socket.setsockopt(socket.SOL_IP, socket.IP_TTL, ttl)
         if df:
             if sys.platform == "linux":
                 self.socket.setsockopt(socket.SOL_IP, 10, 2)
