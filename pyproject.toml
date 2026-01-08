@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "twampy"
-version = "1.2"
+version = "1.3"
 description = "Python implementation of TWAMP/TWAMP-light (RFC 5357), STAMP (RFC 8762), and STAMP Extensions (RFC 8972)"
 readme = "README.md"
 authors = [
