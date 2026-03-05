@@ -877,7 +877,7 @@ def main():
     group.add_argument("--do-not-fragment", action="store_true", help="keyword (do-not-fragment)")
 
     parser = argparse.ArgumentParser()
-    parser.add_argument("-v", "--version", action="version", version="%(prog)s " + __version__)
+    parser.add_argument("-v", "--version", action="version", version="twampy " + __version__)
 
     subparsers = parser.add_subparsers(help="twampy sub-commands")
 
