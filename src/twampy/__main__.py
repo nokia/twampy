@@ -153,7 +153,10 @@ class UdpSession(threading.Thread):
             if sys.platform == "linux":
                 self.socket.setsockopt(socket.SOL_IP, 10, 2)
             elif sys.platform == "win32":
-                self.socket.setsockopt(socket.SOL_IP, 14, 1)
+                # Windows: SOL_IP+14 (IP_DONTFRAGMENT) can raise WSAEINVAL (10022).
+                # Use IPPROTO_IP + IPV6_DONTFRAG; it works for IPv4 UDP on Windows.
+                opt = getattr(socket, "IPV6_DONTFRAG", 14)
+                self.socket.setsockopt(socket.IPPROTO_IP, opt, 1)
             elif sys.platform == "darwin":
                 log.error("do-not-fragment can not be set on darwin")
             else:

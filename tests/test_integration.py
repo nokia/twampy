@@ -85,3 +85,57 @@ def test_sender_responder_integration():
             # Force kill if graceful shutdown fails
             responder.kill()
             responder.wait()
+
+
+def test_sender_do_not_fragment_starts():
+    """
+    Regression test: sender with --do-not-fragment must not crash (e.g. WinError 10022 on Windows).
+
+    Starts responder, runs sender with --do-not-fragment and minimal count; verifies sender
+    exits successfully. This runs on all OSes in CI (Windows would have failed before the fix).
+    """
+    responder = subprocess.Popen(
+        [sys.executable, "-m", "twampy", "responder", "127.0.0.1:40863"],
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        text=True,
+    )
+    time.sleep(2)
+    if responder.poll() is not None:
+        stdout, stderr = responder.communicate()
+        raise AssertionError(f"Responder failed to start:\nSTDOUT: {stdout}\nSTDERR: {stderr}")
+    try:
+        sender = subprocess.run(
+            [
+                sys.executable,
+                "-m",
+                "twampy",
+                "sender",
+                "127.0.0.1:40863",
+                ":40864",
+                "--count",
+                "2",
+                "--interval",
+                "50",
+                "--do-not-fragment",
+                "--padding",
+                "46",
+            ],
+            capture_output=True,
+            text=True,
+            timeout=15,
+        )
+        assert sender.returncode == 0, (
+            f"Sender with --do-not-fragment failed (e.g. WinError 10022 on Windows):\n"
+            f"STDOUT: {sender.stdout}\nSTDERR: {sender.stderr}"
+        )
+    finally:
+        if sys.platform == "win32":
+            responder.terminate()
+        else:
+            responder.send_signal(signal.SIGINT)
+        try:
+            responder.wait(timeout=5)
+        except subprocess.TimeoutExpired:
+            responder.kill()
+            responder.wait()
